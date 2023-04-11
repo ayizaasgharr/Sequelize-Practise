@@ -15,13 +15,7 @@ const Author = sequelize.define("Author", {
 Author.hasMany(Posts);
 Posts.belongsTo(Author, { foreignKey: Author.id });
 
-//n+1 problem
-// Posts.findAll().then((posts)=>{
-//     posts.forEach(async(post)=>{
-//       post.getPosts(async(userpost)=>{console.log(userpost.username)})
-//     })
-//     })
-//n+1 solution
+
 Posts.findAll({
   include: [{ model: Author, attributes: ["userName"] }],
 }).then((posts) => {
